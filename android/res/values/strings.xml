@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CloudACL API Tester</string>
+    <string name="action_settings">Setting</string>
+    <string name="key">key</string>
+	<string name="url">url</string>
+	<string name="url_sample">http://yahoo.com</string>
+	<string name="retrieve">retrieve</string>
+	<string name="result">result</string>
+	<string name="id">id:</string>
+	<string name="retrieved_url">retrieved url:</string>
+	<string name="desc">desc:</string>
+	<string name="error">error</string>
+	<string name="ok">OK</string>
+</resources>
