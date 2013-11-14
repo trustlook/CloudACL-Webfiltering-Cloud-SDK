@@ -1,4 +1,4 @@
-package com.cloudacl.webservice.android;
+package com.cloudacl.webfiltering.java;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +10,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.os.StrictMode;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class WebfilteringService {
     static private final String webfilteringBaseUrl =
@@ -46,13 +45,7 @@ public class WebfilteringService {
         }
     }
     
-    public UrlCategory getCategoryByUrl(String key, String url) throws IOException, JSONException {
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        
+    public UrlCategory getCategoryByUrl(String key, String url) throws IOException, ParseException {
         HttpClient httpClient = new DefaultHttpClient();
         String requestUrl = String.format("%s%s?url=%s&key=%s", webfilteringBaseUrl, "getCategoryByUrl", url, key);
         HttpGet httpGet = new HttpGet(requestUrl);
@@ -70,16 +63,11 @@ public class WebfilteringService {
         {
             sb.append(line + "\n");
         }
-        JSONObject json = new JSONObject(sb.toString());
-        String r_id = json.getString("id");
-        String r_url = null;
-        try {
-            r_url = json.getString("url");
-        } catch (JSONException e) {
-        }
-        String r_desc = json.getString("desc");
-        reader.close();
-        
+        JSONParser parser=new JSONParser();
+        JSONObject json = (JSONObject)parser.parse(sb.toString());
+        String r_id = json.get("id").toString();
+        String r_url = (String)json.get("url");
+        String r_desc = (String)json.get("desc");        
         return new UrlCategory(r_id, r_url, r_desc);
     }
 }
