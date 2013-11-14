@@ -1,4 +1,5 @@
-package com.cloudacl.webservice;
+package com.cloudacl.webservice.android;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

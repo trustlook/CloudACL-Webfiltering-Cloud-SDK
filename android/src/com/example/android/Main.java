@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import com.example.android.R;
-import com.cloudacl.webservice.WebfilteringService;
+import com.cloudacl.webservice.android.WebfilteringService;
 
 import android.os.Bundle;
 import android.app.Activity;
