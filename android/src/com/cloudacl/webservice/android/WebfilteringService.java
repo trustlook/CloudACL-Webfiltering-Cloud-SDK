@@ -54,7 +54,8 @@ public class WebfilteringService {
         }
         
         HttpClient httpClient = new DefaultHttpClient();
-        String requestUrl = String.format("%s%s?url=%s&key=%s", webfilteringBaseUrl, "getCategoryByUrl", url, key);
+        String requestUrl = String.format("%s%s?url=%s&key=%s", 
+            webfilteringBaseUrl, "getCategoryByUrl", url, key);
         HttpGet httpGet = new HttpGet(requestUrl);
         HttpResponse response = httpClient.execute(httpGet);
         
