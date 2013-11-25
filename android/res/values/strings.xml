@@ -3,6 +3,7 @@
 
     <string name="app_name">CloudACL API Tester</string>
     <string name="action_settings">Setting</string>
+    <string name="errorcode">error code</string>
     <string name="key">key</string>
 	<string name="url">url</string>
 	<string name="url_sample">http://yahoo.com</string>

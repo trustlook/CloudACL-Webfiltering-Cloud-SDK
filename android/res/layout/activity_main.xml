@@ -41,7 +41,7 @@
         android:layout_below="@id/url"
         android:gravity="center" >
 
-        <Button
+    	<Button
             android:id="@+id/retrieve_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,21 +49,35 @@
             android:text="@string/retrieve" />
     </LinearLayout>
     
-            <TextView
+    <TextView
         android:id="@+id/result_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/retrieve_layout"
         android:textStyle="bold"
         android:text="@string/result"
-         android:layout_marginTop="15dip"
+        android:layout_marginTop="15dip"
         android:layout_marginBottom="15dip"/>
-            
-        <TextView
+    
+    <TextView
+        android:id="@+id/errorcode_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/errorcode"
+        android:layout_below="@id/result_text"/>
+
+    <EditText
+        android:id="@+id/errorcode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/errorcode_text"
+        android:enabled="false" />
+    
+    <TextView
         android:id="@+id/result_id_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/result_text"
+        android:layout_below="@id/errorcode"
         android:text="@string/id" />
 
     <EditText
@@ -71,7 +85,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/result_id_text"
-        android:enabled="false"/>
+        android:enabled="false" />
     
             <TextView
         android:id="@+id/result_url_text"
@@ -87,7 +101,7 @@
         android:layout_below="@id/result_url_text"
         android:enabled="false"/>
     
-                <TextView
+    <TextView
         android:id="@+id/result_desc_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

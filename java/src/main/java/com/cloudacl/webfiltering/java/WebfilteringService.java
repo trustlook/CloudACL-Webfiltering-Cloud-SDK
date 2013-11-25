@@ -16,7 +16,7 @@ import org.json.simple.parser.ParseException;
 
 public class WebfilteringService {
     static private final String webfilteringBaseUrl =
-            "https://api.cloudacl.com/webfiltering-webapp/webapi/webcategories/";
+            "https://api.cloudacl.com/webapi/getcategory";
     static WebfilteringService INSTANCE = null;
     static public WebfilteringService getInstance() {
         if (INSTANCE == null) {
@@ -26,13 +26,18 @@ public class WebfilteringService {
     }
     
     public static class UrlCategory {
+        private int errorcode;
         private String id;
         private String url;
         private String desc;
-        public UrlCategory(String id, String url, String desc) {
+        public UrlCategory(int errorcode, String id, String url, String desc) {
+            this.errorcode = errorcode;
             this.id = id;
             this.url = url;
             this.desc = desc;
+        }
+        public int getErrorCode() {
+            return errorcode;
         }
         public String getId() {
             return id;
@@ -47,7 +52,7 @@ public class WebfilteringService {
     
     public UrlCategory getCategoryByUrl(String key, String url) throws IOException, ParseException {
         HttpClient httpClient = new DefaultHttpClient();
-        String requestUrl = String.format("%s%s?url=%s&key=%s", webfilteringBaseUrl, "getCategoryByUrl", url, key);
+        String requestUrl = String.format("%s?url=%s&key=%s", webfilteringBaseUrl, url, key);
         HttpGet httpGet = new HttpGet(requestUrl);
         HttpResponse response = httpClient.execute(httpGet);
         
@@ -65,9 +70,10 @@ public class WebfilteringService {
         }
         JSONParser parser=new JSONParser();
         JSONObject json = (JSONObject)parser.parse(sb.toString());
+        long r_errorCode = (Long)json.get("errorcode");
         String r_id = json.get("id").toString();
         String r_url = (String)json.get("url");
         String r_desc = (String)json.get("desc");        
-        return new UrlCategory(r_id, r_url, r_desc);
+        return new UrlCategory((int)r_errorCode, r_id, r_url, r_desc);
     }
 }

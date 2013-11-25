@@ -19,6 +19,7 @@ import android.widget.EditText;
 public class Main extends Activity implements View.OnClickListener {
     EditText keyText;
     EditText urlText;
+    EditText resultErrorCodeText;
     EditText resultIdText;
     EditText resultUrlText;
     EditText resultDescText;
@@ -30,6 +31,7 @@ public class Main extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         keyText = (EditText)findViewById(R.id.key);
         urlText = (EditText)findViewById(R.id.url);
+        resultErrorCodeText = (EditText)findViewById(R.id.errorcode);
         resultIdText = (EditText)findViewById(R.id.result_id);
         resultUrlText = (EditText)findViewById(R.id.result_url);
         resultDescText = (EditText)findViewById(R.id.result_desc);
@@ -50,6 +52,7 @@ public class Main extends Activity implements View.OnClickListener {
         try {
             WebfilteringService.UrlCategory result;
             result = WebfilteringService.getInstance().getCategoryByUrl(key, url);
+            resultErrorCodeText.setText(Integer.toString(result.getErrorCode()));
             resultIdText.setText(result.getId());
             resultUrlText.setText(result.getUrl());
             resultDescText.setText(result.getDesc());

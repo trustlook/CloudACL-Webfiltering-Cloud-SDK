@@ -17,7 +17,7 @@ import android.os.StrictMode;
 
 public class WebfilteringService {
     static private final String webfilteringBaseUrl =
-            "https://api.cloudacl.com/webfiltering-webapp/webapi/webcategories/";
+            "https://api.cloudacl.com/webapi/getcategory";
     static WebfilteringService INSTANCE = null;
     static public WebfilteringService getInstance() {
         if (INSTANCE == null) {
@@ -27,13 +27,18 @@ public class WebfilteringService {
     }
     
     public static class UrlCategory {
+        private int errorcode;
         private String id;
         private String url;
         private String desc;
-        public UrlCategory(String id, String url, String desc) {
+        public UrlCategory(int errorcode, String id, String url, String desc) {
+            this.errorcode = errorcode;
             this.id = id;
             this.url = url;
             this.desc = desc;
+        }
+        public int getErrorCode() {
+            return errorcode;
         }
         public String getId() {
             return id;
@@ -46,7 +51,7 @@ public class WebfilteringService {
         }
     }
     
-    public UrlCategory getCategoryByUrl(String key, String url) throws IOException, JSONException {
+    public UrlCategory getCategoryByUrl(String key, String uri) throws IOException, JSONException {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
@@ -54,8 +59,8 @@ public class WebfilteringService {
         }
         
         HttpClient httpClient = new DefaultHttpClient();
-        String requestUrl = String.format("%s%s?url=%s&key=%s", 
-            webfilteringBaseUrl, "getCategoryByUrl", url, key);
+        String requestUrl = String.format("%s?uri=%s&key=%s", 
+            webfilteringBaseUrl, uri, key);
         HttpGet httpGet = new HttpGet(requestUrl);
         HttpResponse response = httpClient.execute(httpGet);
         
@@ -72,6 +77,7 @@ public class WebfilteringService {
             sb.append(line + "\n");
         }
         JSONObject json = new JSONObject(sb.toString());
+        int r_errorCode = json.getInt("errorcode");
         String r_id = json.getString("id");
         String r_url = null;
         try {
@@ -81,6 +87,6 @@ public class WebfilteringService {
         String r_desc = json.getString("desc");
         reader.close();
         
-        return new UrlCategory(r_id, r_url, r_desc);
+        return new UrlCategory(r_errorCode, r_id, r_url, r_desc);
     }
 }
