@@ -15,23 +15,25 @@
 
 @implementation ViewController
 
-@synthesize resultLbl, urlTxt;
+@synthesize resultLbl, urlTxt, submitBtn;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    resultLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, 170, 280, 100)];
+    resultLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, 130, 280, 100)];
     resultLbl.lineBreakMode = NSLineBreakByWordWrapping;
-    resultLbl.numberOfLines = 3;
+    resultLbl.numberOfLines = 5;
     [self.view addSubview:resultLbl];
     
     urlTxt = [[UITextField alloc] initWithFrame:CGRectMake(20, 30, 280, 50)];
     urlTxt.placeholder = @"Put URL here";
+    [urlTxt addTarget:self action:@selector(onInput) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:urlTxt];
     
-    UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    submitBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [submitBtn setTitle:@"Check" forState:UIControlStateNormal];
     [submitBtn addTarget:self action:@selector(callAPI) forControlEvents:UIControlEventTouchUpInside];
+    submitBtn.enabled = NO;
     submitBtn.frame = CGRectMake(20, 90, 280, 50);
     [self.view addSubview:submitBtn];
     
@@ -42,8 +44,23 @@
     NSMutableDictionary *myParam = [[NSMutableDictionary alloc] init];
     myParam[@"url"] = [urlTxt text];
 
-    NSString *myResult = [CloudaclAPI getCategoryByUrl:myParam];
-    [resultLbl setText:myResult];
+    //API will return the parsed data in a NSDictionary
+    NSDictionary *result = [CloudaclAPI getCategoryByUrl:myParam];
+    
+    //Traverse the key-value result
+    NSMutableString *output = [[NSMutableString alloc] init];
+    for (NSString* key in [result allKeys] ) {
+        [output appendString:[NSString stringWithFormat:@"%@ : %@\n", key, [result objectForKey:key]]];
+    }
+    [resultLbl setText:output];
+    
+    return;
+}
+
+- (void)onInput
+{
+    submitBtn.enabled = ([urlTxt.text length] > 0);
+    return;
 }
 
 - (void)didReceiveMemoryWarning

@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface CloudaclAPI : NSObject
-+ (NSString*) getCategoryByUrl:(NSDictionary *) param;
++ (NSDictionary*) getCategoryByUrl:(NSDictionary *) param;
 @end

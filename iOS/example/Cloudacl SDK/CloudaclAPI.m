@@ -7,13 +7,15 @@
 //
 
 #import "CloudaclAPI.h"
+#import "SBJson.h"
 
 @implementation CloudaclAPI
 
 //Your key here
-static NSString *API_Key = @"";
+static NSString *API_Key = @"8e0ec399-3372-4966-9ce0-8277e84f0bfc";
+static NSString *Request_Url = @"https://api.cloudacl.com/webapi/getcategory";
 
-+ (NSString*) getCategoryByUrl:(NSMutableDictionary *) param{
++ (NSDictionary*) getCategoryByUrl:(NSMutableDictionary *) param{
 
     //Init request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -28,7 +30,7 @@ static NSString *API_Key = @"";
         param[@"url"] = [NSString stringWithFormat:@"http://%@", param[@"url"]];
     }
     
-    NSString *url = [NSString stringWithFormat: @"https://api.cloudacl.com/webfiltering-webapp/webapi/webcategories/getCategoryByUrl?url=%@&key=%@", param[@"url"], API_Key];
+    NSString *url = [NSString stringWithFormat: @"%@?uri=%@&key=%@", Request_Url, param[@"url"], API_Key];
     [request setURL:[NSURL URLWithString:url]];
     
     //Send request & handle HTTP error
@@ -41,7 +43,11 @@ static NSString *API_Key = @"";
         return nil;
     }
     
-    return [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    return [jsonParser objectWithData:responseData];
+    
+    
+    //return [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
 }
 
 

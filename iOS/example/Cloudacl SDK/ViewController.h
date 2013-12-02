@@ -12,7 +12,10 @@
 {
     UILabel *resultLbl;
     UITextField *urlTxt;
+    UIButton *submitBtn;
 }
 @property (nonatomic, retain) UILabel *resultLbl;
 @property (nonatomic, retain) UITextField *urlTxt;
+@property (nonatomic, retain) UIButton *submitBtn;
+
 @end
