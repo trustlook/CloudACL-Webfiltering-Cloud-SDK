@@ -7,7 +7,9 @@ iOS, Java and Python to consume it, but it is not a prerequisite to use the webs
 Input
 ===========
 The API definition is:
+
 https://api.cloudacl.com/webapi/getcategory?uri=param1&key=param2
+
 param1 is the url/host/domain/ip address you want to query, such as:
        yahoo.com, news.yahoo.com, http://news.yahoo.com,
        http://news.yahoo.com/top/, 206.190.61.106
