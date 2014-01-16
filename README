@@ -1,0 +1,125 @@
+CloudACL Webfiltering Webservice SDK
+===========
+CloudACL Webfiltering Webservice is a webservice map any url, host, domain, ip address
+to a category. The API is straightforward, the SDK contains sample code for Android,
+iOS, Java and Python to consume it, but it is not a prerequisite to use the webservice.
+
+Input
+===========
+The API definition is:
+https://api.cloudacl.com/webapi/getcategory?uri=param1&key=param2
+param1 is the url/host/domain/ip address you want to query, such as:
+       yahoo.com, news.yahoo.com, http://news.yahoo.com,
+       http://news.yahoo.com/top/, 206.190.61.106
+param2 is the key you registered from cloudacl.com. If you don't
+       currently have a key, please apply it from:
+       http://www.cloudacl.com/profiles/developer/
+
+Output
+===========
+The output is a JSON document. Here is one example:
+{"errorcode":0,"id":55,"url":"yahoo.com","desc":"search-engine"}
+
+errorcode:  0 success
+           -1 uri is not found in CloudACL database
+           -2 unexpected error
+           -3 unknown key
+           -4 malformed uri
+
+id:         category id, see Category Mapping section
+
+url:        The url hit in the database, it is not necessarily the
+            same as the param1. For example, if user query news.yahoo.com
+            CloudACL does not contain entry for new.yahoo.com, however,
+            there is one entry for yahoo.com, CloudACL will return the category
+            for yahoo.com instead. Here the url field s the actual entry in
+            the database
+
+desc:       If success (errorcode==0), desc is text to describe the category,
+            the same as if you do a lookup in the Category Mapping with the id
+            If fail (errorcode!=0), desc contains the error message
+
+Category Mapping
+===========
+ 0:  unknown
+ 1:  hacking
+ 2:  phishing-and-fraud
+ 3:  botnet
+ 4:  malware
+ 5:  spyware-and-adware
+ 6:  keylogger-and-monitoring
+ 7:  peer2peer
+ 8:  media-streaming
+ 9:  online-storage
+ 10: abortion
+ 11: adult-and-pornography
+ 12: sex-education
+ 13: nudity
+ 14: abused-drugs
+ 15: marijuana
+ 16: healthy-and-medicine
+ 17: real-estate
+ 18: internet-security
+ 19: financial-service
+ 20: business-and-economy
+ 21: computer-information
+ 22: auctions
+ 23: shopping
+ 24: cult-and-occult
+ 25: travel
+ 26: home-garden
+ 27: military
+ 28: social-networking
+ 29: dead-sites
+ 30: stock-and-tool
+ 31: training-and-tool
+ 32: dating
+ 33: religion
+ 34: entertainment-and-art
+ 35: personal-site-and-blog
+ 36: legal
+ 37: local-info
+ 38: job-search
+ 39: gambling
+ 40: translation
+ 41: research-reference
+ 42: software-download
+ 43: game
+ 44: philosophy-and-political
+ 45: weapon
+ 46: pay2surf
+ 47: hunting-and-fishing
+ 48: society
+ 49: educational-institution
+ 50: online-greeting
+ 51: sport
+ 52: swimsuits-&-intimate-apparel
+ 53: questionable
+ 54: kid
+ 55: search-engine
+ 56: internet-portal
+ 57: online-advertisement
+ 58: web-mail
+ 59: envasion-proxy
+ 60: music
+ 61: government
+ 62: news-and-media
+ 63: content-delivery-network
+ 64: internet-communication
+ 65: spam-comfirmed
+ 66: spam-url
+ 67: spam-unconfirmed
+ 68: http-proxy
+ 69: dynamically-content
+ 70: parked-domain
+ 71: alcohol-and-tobacco
+ 72: private-ip
+ 73: image-and-video-search
+ 74: fashion-and-beauty
+ 75: recreation-and-hobbies
+ 76: motor-vehicle
+ 77: web-hosting
+
+Support
+===========
+Please send your questions and comments to api-support@cloudacl.com
